@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skala Prioritas</title>
+    <link rel="stylesheet" href="index.css">
+    <link href='https://css.gg/trash.css' rel='stylesheet'>
+</head>
+<body>
+    <header>
+        <div id="judul-countainer">
+            <h1 id="judul-label">Skala Prioritas</h1>
+            <button id="deadline-button" class="button">DeathLine list</button>
+            <button id="prioritas-button" class="button">Prioritas list</button>
+        </div>
+        <div id="input-container">
+            <div>
+                <h4  id="label-input">Kegiatan baru</h4>
+            </div>
+            <div id="data-container">
+                <div style="display: flex; flex-direction: column;">
+                    <label for="judul">Judul</label>
+                    <input style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" type="text" id="judul" placeholder="Judul">
+                </div>
+                <div style="display: flex; flex-direction: column;">
+                    <label for="deadline">Tenggat waktu</label>
+                    <input style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" type="date" id="deadline" placeholder="">
+                </div>
+                <div id="prioritas-container">
+                    <label for="skala-prioritas">Prioritas</label>
+                    <select name="skala-prioritas" id="skala-prioritas" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                        <option value="4">(4) Penting Mendesak</option>
+                        <option value="3">(3) Penting tidak Mendesak</option>
+                        <option value="2">(2) tidak Penting Mendesak</option>
+                        <option value="1">(1) tidak Penting tidak Mendesak</option>
+                    </select>
+                </div>
+                <textarea style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" name="catatan" id="catatan" cols=30" rows="2" placeholder="Catatan"></textarea>
+            </div>
+        </div>
+        <div id="submit-container">
+            <button type="submit" id="submit-button" class="button">Simpan</button>
+        </div>
+    </header>
+    <center id="list-layout">
+        <div id="deadline-list-container" class="listContainer">
+            <div>
+                <h4>Deadline List</h4>
+            </div>
+            <div id="deadline-list" style="overflow-y: auto; height: 400px;">
+
+            </div>
+        </div>
+        <div id="prioritas-list-container">
+            <div style="display: flex;">
+                <div id="PM-container" class="prioritasContainer">
+                    <div>
+                        <h5>Penting Mendesak</h5>
+                    </div>
+                    <div id="PM-list" class="list">
+
+                    </div>
+                </div>
+                <div id="PtM-container" class="prioritasContainer">
+                    <div>
+                        <h5>Penting tidak Mendesak</h5>
+                    </div>
+                    <div id="PtM-list" class="list">
+
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div id="tPM-container" class="prioritasContainer">
+                    <div>
+                        <h5>tidak Penting Mendesak</h5>
+                    </div>
+                    <div id="tPM-list" class="list">
+
+                    </div>
+                </div>
+                <div id="tPtM-container" class="prioritasContainer">
+                    <div>
+                        <h5>tidak Penting tidak Mendesak</h5>
+                    </div>
+                    <div id="tPtM-list" class="list">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="done-list-container" class="listContainer">
+            <div>
+                <h4>Selesai</h4>
+            </div>
+            <div id="done-list" style="overflow-y: auto; height: 400px;">
+
+            </div>
+
+        </div>
+    </center>
+    <!-- tampilan yang ingin dibuat di bagian headernya terdapat container Input berisikan input Kegiatan, tenggang waktu deadline, skala prioritas.
+    dibawahnya terdapat container body bersikan, list kegiatan yang telah di urutkan berdasarkan skala prioritasnya
+pada tampilan tiap kegiatan terdapat ceklisBox, Nama Kegiatan, waktu-->
+<!-- Layout Body terbagi menjadi dua Tampilan, tsampilan pertama beriskan List yang di urutkan berdasarkan waktu tanggal deadline kegiatan, 
+    bersampingan dengan list kegiatan yang telah di kerjakan.
+    tampilan kedua, list di tampilkan berdasarkan skala prioritas, dengan layout persegi di bagi empat, kotak Ujung kiri atas = penting mendesak
+kotak ujung kanan = penting tidak mendesak, kotak bawah kiri = tidak penting mendesak, kotak bawah kanan = tidak penting tidak mendesak-->
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="index.js"></script>
+<!-- jika button #deadline-button di click 
+1.  *layout menampilkan list deadline #deadline-list-container
+    dan menampilkan list selesai #done-list-container
+2.  *menyembunyikan list prioritas #prioritas-list-container
+3.  *menampilkan isi database di list deadline #deadline-list 
+    diurut berdasarkan tanggal 
+    *list di tampilkan berbentuk table dengan format chechbox:judul:tenggat waktu: prioritas
+    - jika check box ter cheklist maka:
+    *a. data di pindahkan dari list deadline #deadline-list ke list selesai #done-list
+    Xb. data didalam list selesai #done-list akan ditampilkan dengan style tergaris/tercoret
+    XC. data tersebut terhapus dari database.
+    - jika check box ter Unchecklist maka:
+    *a. data di pindahkan dari list selesai #done-list ke list deadline #deadline-list
+    Xb. data tersebut tertambah ke database.
+    *- jika judul ter-kursor maka akan di tampilkan catatan list yang bersifat sementara
+4.  *apabila tombol simpan #submit-button di click  maka data pada panel input akan terkirim di database
+    disaat bersamaan list deadline #deadline-list terupdate  -->
+
+<!-- jika button #prioritas-button di click 
+1.  *layout menampilkan list prioritas #prioritas-list-container
+    dan menampilkan list selesai #done-list container
+2.  *menyembunyikan list deadline #deadline-list-container
+3.  *menampilkan isi database di list prioritas #prioritas-list 
+    yang terbagi ke empat container, berdasarkan skala prioritasnya
+    list di tampilkan dalam table dengan format chechbox:judul:tenggat waktu
+    - jika check box ter cheklist maka:
+    a. *data di pindahkan dari list prioritas #prioritas-list ke list selesai #done-list
+    Xb. data didalam list selesai #done-list akan ditampilkan dengan style tergaris/tercoret
+    XC. data tersebut terhapus dari database.
+    - jika check box ter Unchecklist maka:
+    *a. data di pindahkan dari list selesai #done-list ke list prioritas #prioritas-list
+    Xb. data tersebut tertambah ke database.
+    *- jika judul ter-kursor maka akan di tampilkan catatan list yang bersifat sementara
+4.  *apabila tombol simpan #submit-button di click  maka data pada panel input akan terkirim di database
+    disaat bersamaan list prioritas #prioritas-list per skala prioritas containernya akan terupdate  -->
+
+<!-- problem to solve
+1.X  order by deadline secara descerding, harus di ubah agar list tanpa tanggal berada di urutan terakhir
+2.  *input data harus selalu lengkap, buatkan fitur agar panel-panel input bersifat optional
+3.  *perbaiki tampilan data deadline, hanya menampilkan tanggal, hapus info jamnya
+4.  *tambahkan ditable database column status, penanda list selesai atau tidak
+5.  tampilan list perlu di perbaiki
+6.  *tambahkan tombol hapus diujung setiap list
+7.X  tampilan tanggal yang kosong ketika di list maka tanggalnya harus kosong.-->
+</html>
