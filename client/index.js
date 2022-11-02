@@ -37,7 +37,7 @@ $(document).ready(async () => {
         if($("#catatan").val() != ""){
             dataInput.notes = $("#catatan").val()
         }
-        console.log(dataInput)
+        // console.log(dataInput)
         // buat Object dataInput
         await submitNewData(dataInput)
         await refresh()
@@ -55,9 +55,9 @@ async function myFunction (){
     await refresh ()
 }
 
-async function getLost(){
-    // console.log(event.target.value)
-    await deleteData(event.target.value)
+async function getLost(ID){
+    // console.log(ID)
+    await deleteData(ID)
     await refresh ()
 }
 
@@ -72,7 +72,6 @@ async function refresh (){
         <td class="tooltip">${el.title}<span class="tooltiptext">${el.notes}</span></td>
         <td>${new Date(el.deadlines).toDateString()}</td>
         <td>(${el.priorityScale})</td>
-        <td><button class="trash2" onclick="getLost()" value ="${el.ID}"><i class="gg-trash"></i></button></td>
         </tr>`)
     })
     // console.log("====== butuh id dan checked ======")
@@ -85,7 +84,7 @@ async function refresh (){
         <td class="tooltip">${el.title}<span class="tooltiptext">${el.notes}</span></td>
         <td>${new Date(el.deadlines).toDateString()}</td>
         <td>(${el.priorityScale})</td>
-        <td><button class="trash1" onclick="getLost()" value ="${el.ID}"><i class="gg-trash"></i></button></td>
+        <td><img src="https://freesvg.org/img/trash.png" alt="Buang" style="width:18px; margin-left: 20px;" onclick="getLost('${el.ID}')"></td>
       </tr>`)
     })
 
@@ -97,7 +96,6 @@ async function refresh (){
         <td><input type="checkbox" id="${el.ID}" onclick="myFunction()" name="${el.ID}" value="${el.ID}"></td>
         <td class="tooltip">${el.title}<span class="tooltiptext">${el.notes}</span></td>
         <td>${new Date(el.deadlines).toDateString()}</td>
-        <td><button class="trash1" onclick="getLost()" value ="${el.ID}"><i class="gg-trash"></i></button></td>
       </tr>`)
     })
 
@@ -109,7 +107,6 @@ async function refresh (){
         <td><input type="checkbox" id="${el.ID}" onclick="myFunction()" name="${el.ID}" value="${el.ID}"></td>
         <td class="tooltip">${el.title}<span class="tooltiptext">${el.notes}</span></td>
         <td>${new Date(el.deadlines).toDateString()}</td>
-        <td><button class="trash2" onclick="getLost()" value ="${el.ID}"><i class="gg-trash"></i></button></td>
       </tr>`)
     })
 
@@ -121,7 +118,6 @@ async function refresh (){
         <td><input type="checkbox" id="${el.ID}" onclick="myFunction()" name="${el.ID}" value="${el.ID}"></td>
         <td class="tooltip">${el.title}<span class="tooltiptext">${el.notes}</span></td>
         <td>${new Date(el.deadlines).toDateString()}</td>
-        <td><button class="trash2" onclick="getLost()" value ="${el.ID}"><i class="gg-trash"></i></button></td>
       </tr>`)
     })
 
@@ -133,7 +129,6 @@ async function refresh (){
         <td><input type="checkbox" id="${el.ID}" onclick="myFunction()" name="${el.ID}" value="${el.ID}"></td>
         <td class="tooltip">${el.title}<span class="tooltiptext">${el.notes}</span></td>
         <td>${new Date(el.deadlines).toDateString()}</td>
-        <td><button class="trash1" onclick="getLost()" value ="${el.ID}"><i class="gg-trash"></i></button></td>
       </tr>`)
     })
 }
